@@ -10,9 +10,9 @@ from extractor.log_event_extractor import extract_log_events
 from utils import io_util
 
 
-failure_post_data: dict = io_util.load('MicroSS/post-data.pkl')
+failure_post_data: dict = io_util.load('/GAIA_data/MicroSS/post-data-10.pkl')
 # 将第一列设置为索引
-label_df = pd.read_csv('MicroSS/gaia.csv', index_col=0)
+label_df = pd.read_csv('/GAIA_data/MicroSS/gaia.csv', index_col=0)
 
 for idx, row in tqdm(label_df.iterrows(), total=label_df.shape[0]):
     chunk = failure_post_data[idx]
@@ -23,8 +23,12 @@ for idx, row in tqdm(label_df.iterrows(), total=label_df.shape[0]):
 
     # 捕获服务与节点的对应关系
     node2svcs = defaultdict(list)
-    for f in os.listdir('./MicroSS/metric'):
+    for f in os.listdir('/GAIA_data/MicroSS/metric'):
+        if f.startswith('.'):
+            continue
         splits = f.split('_')
+        if len(splits) < 2:
+            continue
         svc, host = splits[0], splits[1]
         if svc in ['system', 'redis', 'zookeeper']:
             continue
@@ -68,5 +72,5 @@ for idx, row in tqdm(label_df.iterrows(), total=label_df.shape[0]):
     chunk = failure_post_data[idx]
     edges[idx] = chunk['edges']
     nodes[idx] = chunk['nodes']
-io_util.save_json('MicroSS/nodes.json', nodes)
-io_util.save_json('MicroSS/edges.json', edges)
+io_util.save_json('/GAIA_data/MicroSS/nodes.json', nodes)
+io_util.save_json('/GAIA_data/MicroSS/edges.json', edges)

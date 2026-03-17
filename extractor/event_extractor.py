@@ -8,14 +8,15 @@ from extractor.metric_event_extractor import extract_metric_events
 from extractor.trace_event_extractor import extract_trace_events
 from extractor.log_event_extractor import extract_log_events
 from utils import io_util
+import os
 
 
-data: dict = io_util.load('MicroSS/post-data-10.pkl')
+data: dict = io_util.load('/GAIA_data/MicroSS/post-data-10.pkl')
 # 将第一列设置为索引
-label_df = pd.read_csv('MicroSS/gaia.csv', index_col=0)
+label_df = pd.read_csv('/GAIA_data/MicroSS/gaia.csv', index_col=0)
 
-metric_detectors = io_util.load('MicroSS/detector/metric-detector-strict-host.pkl')
-trace_detectors = io_util.load('MicroSS/detector/trace-detector.pkl')
+metric_detectors = io_util.load('/GAIA_data/MicroSS/detector/metric-detector-strict-host.pkl')
+trace_detectors = io_util.load('/GAIA_data/MicroSS/detector/trace-detector.pkl')
 
 
 metric_events_dic = defaultdict(list)
@@ -40,7 +41,7 @@ for idx, row in tqdm(label_df.iterrows(), total=label_df.shape[0]):
     trace_costs.append(time.time()-st)
     # extract log events
     st = time.time()
-    miner = io_util.load('./drain/gaia-drain.pkl')
+    miner = io_util.load('TVDiag/extractor/drain/gaia-drain.pkl')
     log_df = chunk['log']
     log_events = extract_log_events(log_df, miner, 0.5)
     log_events_dic[idx] = log_events
@@ -56,6 +57,7 @@ print(f'the time cost of extract log events is {log_time}')
 # the time cost of extract trace events is 0.23339865726162023
 # the time cost of extract log events is 0.6638196256618483
 
-io_util.save_json('events/log/log.json', log_events_dic)
-io_util.save_json('events/metric/metric.json', metric_events_dic)
-io_util.save_json('events/trace/trace.json', trace_events_dic)
+os.makedirs("events", exist_ok=True)
+io_util.save_json('events/logs.json', log_events_dic)
+io_util.save_json('events/metrics.json', metric_events_dic)
+io_util.save_json('events/traces.json', trace_events_dic)

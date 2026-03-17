@@ -49,7 +49,7 @@ def process_traces(dir):
     trace_df = spans_df_left_join(trace_df)
     trace_df = trans2timestamp(trace_df)
 
-    trace_df.to_csv(f"trace.csv")
+    trace_df.to_csv(f"/GAIA_data/trace.csv")
 
 
 def process_logs(dir):
@@ -66,7 +66,7 @@ def process_logs(dir):
             df = extract_Date(df)
             dfs.append(df)
     log_df = pd.concat(dfs)
-    log_df.to_csv("log.csv")
+    log_df.to_csv("/GAIA_data/log.csv")
 
 
 def extract_traces(trace_df: pd.DataFrame, start_time):
@@ -104,18 +104,18 @@ def read_all_metrics():
         pod1 = svc+'1'
         pod2 = svc+'2'
         pod_names.extend([pod1, pod2])
-    for f in os.listdir("MicroSS/metric"):
+    for f in os.listdir("/GAIA_data/MicroSS/metric"):
         splits = f.split('_')
         cur_pod, cur_host = splits[0], splits[1]
         if (cur_pod not in pod_names) or ('2021-07-15_2021-07-31' in f):
             continue
         metric_name = '_'.join(splits[2:-2])
-        df1 = pd.read_csv(f'MicroSS/metric/{f}')
+        df1 = pd.read_csv(f'/GAIA_data/MicroSS/metric/{f}')
         next_name = f.replace(
                         "2021-07-01_2021-07-15",
                         "2021-07-15_2021-07-31"
                     )
-        df2 = pd.read_csv(f'MicroSS/metric/{next_name}')
+        df2 = pd.read_csv(f'/GAIA_data/MicroSS/metric/{next_name}')
         key = cur_pod + '_' + cur_host
         if key not in data.keys():
             data[key] = {}
@@ -123,15 +123,15 @@ def read_all_metrics():
     return data
 
 if __name__ == '__main__':
-    # trace_df = process_traces("trace")
-    # log_df = process_logs("business")
+    # trace_df = process_traces("/GAIA_data/MicroSS/trace")
+    # log_df = process_logs("/GAIA_data/MicroSS/business")
 
-    label_df = pd.read_csv("MicroSS/gaia.csv")
+    label_df = pd.read_csv("/GAIA_data/MicroSS/gaia.csv")
     label_df['st_time'] = label_df['st_time'].apply(lambda x: time2stamp(str(x).split('.')[0]))
     label_df['ed_time'] = label_df['ed_time'].apply(lambda x: time2stamp(str(x).split('.')[0]))
 
-    trace_df = pd.read_csv("MicroSS/trace.csv")
-    log_df = pd.read_csv("MicroSS/log.csv")
+    trace_df = pd.read_csv("/GAIA_data/trace.csv")
+    log_df = pd.read_csv("/GAIA_data/log.csv")
 
     pre_data, post_data = {}, {}
     metric_data = read_all_metrics()
@@ -180,5 +180,5 @@ if __name__ == '__main__':
         process_time = end_time - start_time
         print(fr"完成{idx}, 用时{process_time}")
 
-    # io_util.save("MicroSS/pre-data.pkl", pre_data)
-    io_util.save("MicroSS/post-data-10.pkl", post_data)
+    io_util.save("/GAIA_data/MicroSS/pre-data.pkl", pre_data)
+    io_util.save("/GAIA_data/MicroSS/post-data-10.pkl", post_data)

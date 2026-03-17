@@ -1,0 +1,32 @@
+2026-03-13 03:56:16 [INFO]: Load raw events from gaia dataset
+2026-03-13 03:56:16 [INFO]: Build embedding for raw events
+2026-03-13 03:56:23 [INFO]: Build dataset for training
+2026-03-13 03:56:27 [INFO]: Currently using GPU 0
+2026-03-13 03:56:27 [INFO]: dataset: gaia
+2026-03-13 03:56:27 [INFO]: reconstruct: True
+2026-03-13 03:56:27 [INFO]: log_step: 20
+2026-03-13 03:56:27 [INFO]: gpu_device: 0
+2026-03-13 03:56:27 [INFO]: modalities: ['metric', 'trace', 'log']
+2026-03-13 03:56:27 [INFO]: metric_direction: True
+2026-03-13 03:56:27 [INFO]: trace_op: True
+2026-03-13 03:56:27 [INFO]: trace_ab_type: True
+2026-03-13 03:56:27 [INFO]: aug_percent: 0.2
+2026-03-13 03:56:27 [INFO]: aug_times: 10
+2026-03-13 03:56:27 [INFO]: TO: True
+2026-03-13 03:56:27 [INFO]: CM: True
+2026-03-13 03:56:27 [INFO]: dynamic_weight: True
+2026-03-13 03:56:27 [INFO]: temperature: 0.3
+2026-03-13 03:56:27 [INFO]: contrastive_loss_scale: 0.1
+2026-03-13 03:56:27 [INFO]: batch_size: 512
+2026-03-13 03:56:27 [INFO]: epochs: 500
+2026-03-13 03:56:27 [INFO]: alert_embedding_dim: 128
+2026-03-13 03:56:27 [INFO]: graph_hidden_dim: 64
+2026-03-13 03:56:27 [INFO]: graph_out: 32
+2026-03-13 03:56:27 [INFO]: graph_layers: 2
+2026-03-13 03:56:27 [INFO]: linear_hidden: [64]
+2026-03-13 03:56:27 [INFO]: lr: 0.001
+2026-03-13 03:56:27 [INFO]: weight_decay: 0.0001
+2026-03-13 03:56:27 [INFO]: feat_drop: 0
+2026-03-13 03:56:27 [INFO]: patience: 10
+2026-03-13 03:56:27 [INFO]: ft_num: 5
+2026-03-13 03:56:27 [INFO]: aggregator: mean

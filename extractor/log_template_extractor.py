@@ -2,8 +2,8 @@ import pandas as pd
 from drain.drain_template_extractor import *
 from utils import io_util
 
-data: dict = io_util.load('MicroSS/post-data.pkl')
-label_df = pd.read_csv('MicroSS/gaia.csv', index_col=0)
+data: dict = io_util.load('/GAIA_data/MicroSS/post-data-10.pkl')
+label_df = pd.read_csv('/GAIA_data/MicroSS/gaia.csv', index_col=0)
 
 logs = []
 for idx, row in tqdm(label_df.iterrows(), total=label_df.shape[0]):
@@ -14,7 +14,7 @@ for idx, row in tqdm(label_df.iterrows(), total=label_df.shape[0]):
 
 miner = extract_templates(
     log_list=logs, 
-    save_pth='drain/gaia-drain.pkl')
+    save_pth='TVDiag/extractor/drain/gaia-drain.pkl')
 # miner = io_util.load('drain/gaia-drain.pkl')
 
 sorted_clusters = sorted(miner.drain.clusters, key=lambda it: it.size, reverse=True)
@@ -32,4 +32,4 @@ template_df = pd.DataFrame(data={
     'template': templates,
     'count': template_counts
 })
-template_df.to_csv('./drain/gaia-template.csv', index=False)
+template_df.to_csv('TVDiag/extractor/drain/gaia-template.csv', index=False)

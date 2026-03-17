@@ -94,6 +94,8 @@ class EventProcess():
             # build embedding
             embs = {}
             for idx in self.labels['index']:
+                # TODO: check
+                nodes = self.nodes[str(idx)]
                 # group by instance
                 graph_embs = []
                 for node in nodes:

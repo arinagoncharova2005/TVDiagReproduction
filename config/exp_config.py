@@ -2,7 +2,7 @@ class Config:
     def __init__(self, dataset) -> None:
         # base config
         self.dataset = dataset
-        self.reconstruct = False
+        self.reconstruct = True
         self.log_step = 20
         self.gpu_device = '0'
 
